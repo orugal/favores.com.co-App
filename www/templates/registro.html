@@ -1,0 +1,40 @@
+<ion-view title="Registro" id="page10"  hide-nav-bar="true" ng-init="initRegistro()">
+  <ion-content padding="false">
+    <img src="img/6VHZjyHiRPCRCkQHIRkR_logo.png" width="40%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+    <div class="row">
+    <div class="col col-5"></div>
+    <div class="col col-90">
+
+    <form id="formRegistro" class="list" ng-submit="enviaRegistro()">
+      <ion-list id="login-list2">
+        <label class="item item-input">
+          <input type="text" placeholder="Nombre y apellidos" id="nombre" name="nombre" ng-model="nombre" />
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Correo electrónico" id="email" name="email" ng-model="email" />
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Número celular" id="celular" name="celular" ng-model="celular" />
+        </label>
+        <label class="item item-input" >
+          <input type="text" placeholder="Ciudad" id="ciudad" name="ciudad" ng-model="ciudad" />
+        </label>
+        <label class="item item-input" >
+          <input type="password" placeholder="Contraseña" id="clave" name="clave" ng-model="clave" />
+        </label>
+        <label class="item item-input" >
+          <input type="password" placeholder="Repita la contraseña" id="rclave" name="rclave" ng-model="rclave" />
+        </label>
+        <label class="item">
+          <input type="checkbox" ng-model="terminos" id="terminos" name="terminos" value="1"> He leido y acepto los términos
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button type="submit" id="login-button1" class="button button-positive  button-block">REGISTRARSE</button>
+      <a ui-sref="inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+    </form>
+    </div>
+    <div class="col col-5"></div>
+  </div>
+  </ion-content>
+</ion-view>

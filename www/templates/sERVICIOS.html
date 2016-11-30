@@ -1,0 +1,24 @@
+<ion-view id="page1" ng-init="initServicios()" title='<center><img class="title-image" src="img/logoMini.png" style="width:40%;margin:4% 0 0 0"/></center>' left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="true">
+  <div class="bar bar-subheader bar-positive" style="background:#3163AF !important;">
+    <h2 class="title">NUESTROS SERVICIOS</h2>
+  </div>
+
+  
+
+
+  <ion-content padding="true" class="has-header" style="margin:15% 0 0">
+  <ion-refresher
+    pulling-text="Desliza para actualizar..."
+    on-refresh="refreshServicios()">
+  </ion-refresher>
+    <ul class="list">
+
+        <a  style="border:none;margin:0 0 3% 0" class="item item-avatar" ng-repeat="serv in listaServicios" ui-sref="detalleServicio({idServicio:serv.id})">
+          <img src="{{serv.foto}}">
+          <h2 style="font-weight:bold">{{serv.titulo}}</h2>
+          <p>{{serv.resumen}}</p>
+        </a>
+
+    </ul>
+  </ion-content>
+</ion-view>

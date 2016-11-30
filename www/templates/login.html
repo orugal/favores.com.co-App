@@ -1,0 +1,28 @@
+<ion-view title="Login" id="page4"  hide-nav-bar="true">
+  <ion-content padding="true">
+  <br><br>
+    <img src="img/6VHZjyHiRPCRCkQHIRkR_logo.png" width="60%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+
+    <div class="row">
+    <div class="col col-10"></div>
+    <div class="col col-80">
+      
+
+    <form id="formLogin" class="list" ng-submit="validaLogin()">
+      <ion-list id="login-list2">
+        <label class="item item-input" >
+          <input type="text" placeholder="Ingrese su email" id="username" name="username" ng-model="username">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Ingrese su clave"  id="contrasena" name="contrasena" ng-model="contrasena">
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button type="submit" id="login-button1" class="button button-positive  button-block">INGRESAR</button>
+      <a ui-sref="inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+    </form>
+    </div>
+    <div class="col col-10"></div>
+  </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,194 @@
+<ion-view id="page8" title='<center>NUEVA SOLICITUD</center>' left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false" ng-init="initSolicitudN()">
+  <ion-nav-bar class="bar-positive">
+      <!--<ion-nav-back-button></ion-nav-back-button>-->
+      <ion-nav-buttons side="left">
+       <a class="button button-icon button-clear ion-chevron-left" menu-toggle="left"  ui-sref="menu.sERVICIOS"></a>
+      </ion-nav-buttons>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <!--<a ui-sref="menu.notificaciones" class="button button-icon button-clear ion-android-globe"></a>-->
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content padding="true" class="has-header">
+
+    <div class="row">
+      <div class="col col-5"></div>
+      <div class="col col-90">
+
+      <form id="formRegistro" class="list" ng-submit="saveSolicitud()">
+        <h3 style="color:#2B5BA7;text-align: center">SOLICITAR FAVOR</h3>
+        <ion-list id="login-list2">
+          <p><center>Seleccione el tipo de favor que desea solicitar.</center></p>
+          <label class="item item-input" id="login-input1">
+            <select style="width: 100%;background: transparent;height:25px;border:none;box-shadow: none" ng-model="servicio" id="servicio" name="servicio" ng-change="poneFormulario()">
+              <option value="">Tipo de favor</option>
+              <option ng-repeat="servi in listaServicios" value="{{servi.id}}" data-form="{{servi.iva}}" data-ejemplo="{{servi.ejemplo}}"  style="text-transform: uppercase">{{servi.titulo}}</option>
+            </select>
+          </label>
+          <input type="hidden" name="formCaja" id="formCaja">
+          <p id="ejemplo" style="padding:2%"></p>
+          <!-- Formulario sin origen ni destino-->
+          <div class="forms" id="form1" style="float:left;width:100%;margin:5% 0 0 0;display: none">
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Fecha</span>
+                <input name="fecha" id="fecha" type="date"  data-date-format="DD MMMM YYYY"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Hora</span>
+                <input name="hora" id="hora" type="text"/>
+              </label>
+
+              <button type="button" class="button button-positive  button-block"  ng-click="openTimePicker1('#hora')">Seleccionar hora</button>
+
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Especifique los detalles del favor</span>
+                <textarea name="contenidoFavor" id="contenidoFavor" placeholder="Escriba una breve descripción" rows="5"></textarea>
+              </label>
+              <div class="spacer" style="height: 40px;"></div>
+              
+              <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
+              <a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+          </div>
+
+          <!-- Formulario con datos de origen-->
+          <div class="forms" id="form2" style="float:left;width:100%;margin:5% 0 0 0;display:none">
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Fecha y hora</span>
+                <input name="fecha2" id="fecha2" type="date"  data-date-format="DD MMMM YYYY"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Hora</span>
+                <input name="hora2" id="hora2" type="text"/>
+              </label>
+
+              <button type="button" class="button button-positive  button-block"  ng-click="openTimePicker1('#hora2')">Seleccionar hora</button>
+
+              <h5 style="color:#2B5BA7;text-align: center">DATOS DE ORIGEN</h5>
+              <p><center>Entíendase por datos de origen aquellos que nos permiten saber a donde debemos llegar para recoger, recibir o asistir para prestar el favor.</center></p>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Dirección</span>
+                <input type="text" name="direccion1" id="direccion1"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Contacto</span>
+                <input type="text" name="persona1" id="persona1"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Teléfono</span>
+                <input type="text" name="telefono1" id="telefono1"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Especifique los detalles del favor</span>
+                <textarea name="contenidoFavor2" id="contenidoFavor2" placeholder="Escriba una breve descripción" rows="5"></textarea>
+              </label>
+              <div class="spacer" style="height: 40px;"></div>
+              
+              <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
+              <a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+          </div>
+
+          <!-- Formulario con datos de destino-->
+          <div class="forms" id="form3" style="float:left;width:100%;margin:5% 0 0 0;display:none">
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Fecha y hora</span>
+                <input name="fecha3" id="fecha3" type="date"  data-date-format="DD MMMM YYYY"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Hora</span>
+                <input name="hora3" id="hora3" type="text"/>
+              </label>
+
+              <button type="button" class="button button-positive  button-block"  ng-click="openTimePicker1('#hora3')">Seleccionar hora</button>
+               <h5 style="color:#2B5BA7;text-align: center">DATOS DE DESTINO</h5>
+              <p><center>Entíendase por datos de destino aquellos que nos permiten saber a donde debemos finalizar el favor que solicite.</center></p>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Dirección</span>
+                <input type="text" name="direccion2" id="direccion2"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Contacto</span>
+                <input type="text" name="persona2" id="persona2"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Teléfono de contacto</span>
+                <input type="text" name="telefono2" id="telefono2"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Especifique los detalles del favor</span>
+                <textarea name="contenidoFavor3" id="contenidoFavor3" placeholder="Escriba una breve descripción" rows="5"></textarea>
+              </label>
+              <div class="spacer" style="height: 40px;"></div>
+              
+              <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
+              <a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+          </div>
+
+          <!-- Formulario con datos y destino-->
+          <div class="forms" id="form4" style="float:left;width:100%;margin:5% 0 0 0;display:none">
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Fecha</span>
+                <input name="fecha4" id="fecha4" type="date"  data-date-format="DD MMMM YYYY"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Hora</span>
+                <input name="hora4" id="hora4" type="text"/>
+              </label>
+
+              <button type="button" class="button button-positive  button-block"  ng-click="openTimePicker1('#hora4')">Seleccionar hora</button>
+
+              <h5 style="color:#2B5BA7;text-align: center">DATOS DE ORIGEN</h5>
+              <p><center>Entíendase por datos de origen aquellos que nos permiten saber a donde debemos llegar para recoger, recibir o asistir para prestar el favor.</center></p>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Dirección</span>
+                <input type="text" name="direccion14" id="direccion14"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Contacto</span>
+                <input type="text" name="persona14" id="persona14"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Teléfono de contacto</span>
+                <input type="text" name="telefono14" id="telefono14"/>
+              </label>
+
+              <h5 style="color:#2B5BA7;text-align: center">DATOS DE DESTINO</h5>
+              <p><center>Entíendase por datos de destino aquellos que nos permiten saber a donde debemos finalizar el favor que solicite.</center></p>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Dirección</span>
+                <input type="text" name="direccion24" id="direccion24"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Contacto</span>
+                <input type="text" name="persona24" id="persona24"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Teléfono de contacto</span>
+                <input type="text" name="telefono24" id="telefono24"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Especifique los detalles del favor</span>
+                <textarea name="contenidoFavor4" id="contenidoFavor4" placeholder="Escriba una breve descripción" rows="5"></textarea>
+              </label>
+              <div class="spacer" style="height: 40px;"></div>
+              <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
+              <a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+          </div>
+
+        </ion-list>
+      </form>
+      </div>
+      <div class="col col-5"></div>
+  </div>
+
+  </ion-content>
+
+</ion-view>
+
+
+
+
+
+
+
+

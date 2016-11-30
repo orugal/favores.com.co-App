@@ -1,0 +1,80 @@
+<ion-view id="page8" title='<center>DETALLE DEL SERVICIO</center>' ng-init="initDetalleSolicitud()" left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false">
+  <ion-nav-bar class="bar-positive">
+      <!--<ion-nav-back-button></ion-nav-back-button>-->
+      <ion-nav-buttons side="left">
+        <a class="button button-icon button-clear ion-chevron-left" menu-toggle="left"  ng-click="myGoBack()"></a>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <!--<a ui-sref="menu.notificaciones" class="button button-icon button-clear ion-android-globe"></a>-->
+      </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content padding="true" class="has-header">
+
+   <ion-refresher
+    pulling-text="Desliza para actualizar..."
+    on-refresh="refreshSolicitudes()">
+  </ion-refresher>
+
+    <div class="row">
+    <div class="col col-5"></div>
+    <div class="col col-90">
+
+
+      <h3 style="color:#2B5BA7">SOLICITUD NRO: {{dataSolicitud.idSolicitud}}</h3>
+      <h4 style="color:#2B5BA7">Solicitud de tipo: {{dataSolicitud.servicio}}</h4>
+      <h5>Estado: {{dataSolicitud.estadoText}}</h5>
+      <!--<h6>Fecha de solicitud: {{dataSolicitud.fechaSolicitud}}</h6>-->
+      <h5>Fecha: {{dataSolicitud.fechaFavor}}</h5>
+      <h5>Hora: {{dataSolicitud.hora}}</h5>
+
+      <h4 ng-if="dataSolicitud.direccion1 != null " style="color:#2B5BA7">Datos de origen</h4>
+      <h5 ng-if="dataSolicitud.direccion1 != null ">Dirección: {{dataSolicitud.direccion1}}</h5>
+      <h5 ng-if="dataSolicitud.persona1 != null ">Contacto: {{dataSolicitud.persona1}}</h5>
+      <h5 ng-if="dataSolicitud.telefono1 != null ">Teléfono: {{dataSolicitud.telefono1}}</h5>
+      
+      <h4 ng-if="dataSolicitud.direccion2 != null " style="color:#2B5BA7">Datos de destino</h4>
+      <h5 ng-if="dataSolicitud.direccion2 != null ">Dirección: {{dataSolicitud.direccion2}}</h5>
+      <h5 ng-if="dataSolicitud.persona2 != null ">Contacto: {{dataSolicitud.persona2}}</h5>
+      <h5 ng-if="dataSolicitud.telefono2 != null ">Teléfono: {{dataSolicitud.telefono2}}</h5>
+
+      <h4 style="color:#2B5BA7">Descripción del servicio</h4>
+      <p style="text-align: justify;">
+        {{dataSolicitud.texto}} 
+      </p>
+
+      <h6 ng-if="dataSolicitud.prestador" style="color:#2B5BA7">DATOS DEL PRESTADOR DEL SERVICIO</h6>
+      <div ng-if="dataSolicitud.prestador" class="list">
+          <a class="item item-avatar" href="#">
+            <img src="img/user.jpg">
+            <h2>{{dataSolicitud.dataPrestador.nombres}} {{dataSolicitud.dataPrestador.apellidos}}</h2>
+            <p>{{dataSolicitud.dataPrestador.email}}</p>
+          </a>
+      </div>
+
+      <div class="list" ng-if="dataSolicitud.costo !=0">
+      <h6 style="color:#2B5BA7">COSTO DEL SERVICIO</h6>
+      <h1 style="color:#2B5BA7">{{dataSolicitud.costo |currency:$:0}}</h1>
+      </div>
+
+      <div style="float:left;width: 100%" ng-if="dataSolicitud.estado!=4 && dataSolicitud.estado!=5 && dataSolicitud.estado!=6">
+      <h6 ng-if="dataSolicitud.prestador != 0 " style="color:#2B5BA7">PREGUNTAR AL PRESTADOR</h6>
+
+        <label class="item item-input">
+          <textarea placeholder="Pregunte lo que necesite al prestador"  rows="5" id="pregunta" name="pregunta" ng-model="pregunta"></textarea>
+        </label>
+
+      <button type="button" ng-click="enviaPregunta(dataSolicitud.estadoText,dataSolicitud.idSolicitud)" class="button button-positive  button-block">REALIZAR PREGUNTA</button>
+      </div>
+
+      <div class="spacer" style="height: 40px;"></div>
+      <div  ng-if="dataSolicitud.costo !=0">
+        <h6 ng-if="dataSolicitud.estado == 8" style="color:#2B5BA7">GESTIÓN USUARIO</h6>
+        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,7)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-positive  button-block">APROBAR SERVICIO</button>
+        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,6)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-positive  button-block button-clear">RECHAZAR SERVICIO</button>
+      </div>
+
+    </div>
+    <div class="col col-5"></div>
+  </div>
+  </ion-content>
+</ion-view>

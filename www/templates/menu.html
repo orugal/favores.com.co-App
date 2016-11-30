@@ -1,0 +1,35 @@
+<ion-side-menus enable-menu-with-back-views="true" ng-init="initMenu()">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-positive">
+      <!--<ion-nav-back-button></ion-nav-back-button>-->
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <a ui-sref="menu.notificaciones" class="button button-icon button-clear ion-android-globe"></a>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="side-menu21"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" id="side-menu21"  hide-nav-bar="true">
+    <ion-content padding="false" class="side-menu-left">
+      <div class="list">
+          <a class="item item-avatar" href="#">
+            <img src="img/user.jpg">
+            <h2>{{dataUsuario.nombres}}</h2>
+            <p>{{dataUsuario.email}}</p>
+          </a>
+      </div>
+      <ul class="list">
+        <a style="border:none" class="item" id="menu-list-item1" ui-sref="menu.sERVICIOS" menu-close="">SERVICIOS</a>
+        <a style="border:none" class="item" id="menu-list-item2" ui-sref="nuevaSolicitud" menu-close="">NUEVA SOLICITUD</a>
+        <a style="border:none" class="item" id="menu-list-item3" ui-sref="misolicitudes" menu-close="">MIS SOLICITUDES</a>
+       <!-- <a style="border:none" class="item" id="menu-list-item4" ui-sref="menu.eDITARINFORMACIN" menu-close="">EDITAR INFORMACIÓN</a>-->
+        <a style="border:none" class="item" id="menu-list-item5" ui-sref="menu.cONTACTENOS" menu-close="">CONTACTENOS</a>
+        <a style="border:none" class="item" id="menu-list-item6" ng-click="cerrarSession()"  menu-close="">CERRAR SESIÓN</a>
+      </ul>
+    </ion-content>
+  </ion-side-menu>
+
+</ion-side-menus>
