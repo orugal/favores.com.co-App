@@ -1,12 +1,62 @@
+var html5   = {};
+var dbsize  = 1024 * 1024; //1MB
+html5.db = null;
+html5.db = openDatabase("favores", "1.0", "favores.com.co", dbsize);
+
+/*html5.db.transaction(function(tx){
+	tx.executeSql("DROP TABLE notifi", []);
+});*/
+
+html5.db.transaction(function(tx){
+    tx.executeSql("CREATE TABLE IF NOT EXISTS notifi(id INTEGER PRIMARY KEY, idSolicitud INTEGER, nueva INTEGER, mensaje TEXT)", []);
+});
+
 angular.module('app.services', [])
 
-.factory('funciones', [function()
-{
+.factory('funciones', ['$interval', '$log','$state','$ionicPopup', function($interval, $log,$state,$ionicPopup) {
 	var paquete = {
-		urlAPi:"http://www.wannabe.com.co/favores.com.co/api/index.php",
-		urlWeb:"http://www.wannabe.com.co/favores.com.co/",
-		//urlAPi:"http://192.168.1.10/favores.com.co/api/index.php",
-		//urlWeb:"http://192.168.1.10/favores.com.co/",
+		urlAPi:"http://www.favores.com.co/api/index.php",
+		urlWeb:"http://www.favores.com.co/",
+		//urlAPi:"http://localhost/favores.com.co/api/index.php",
+		//urlWeb:"http://localhost/favores.com.co/",
+		testeo:function()
+		{	
+			//alert("vamos a ver");
+			html5.db.transaction(function(tx){
+			    p = 0;
+			    //alert("paso 1")
+			   tx.executeSql("SELECT * FROM notifi WHERE id != ? ORDER BY id DESC",[p],function(ts,rs){
+			        if(rs.rows.item(0).nueva == 1)
+			        {
+			        	if(rs.rows.item(0).mensaje != null)
+			        	{
+			        		alert(rs.rows.item(0).mensaje)
+			        		var ultimoId   =  rs.rows.item(0).id;
+					        var solicitud   =  rs.rows.item(0).idSolicitud;
+					        //alert(ultimoId+" En el controlador.");
+					        html5.db.transaction(function(tx){
+					           tx.executeSql("UPDATE notifi set nueva = ? WHERE id=?",[0,ultimoId],html5.onSuccess,html5.onError);
+					        });
+					        $state.go('detalleSolicitud', {solicitud: solicitud})
+			        	}
+			        	else
+			        	{
+			        		var ultimoId   =  rs.rows.item(0).id;
+					        var solicitud   =  rs.rows.item(0).idSolicitud;
+					        //alert(ultimoId+" En el controlador.");
+					        html5.db.transaction(function(tx){
+					           tx.executeSql("UPDATE notifi set nueva = ? WHERE id=?",[0,ultimoId],html5.onSuccess,html5.onError);
+					        });
+					        $state.go('detalleSolicitud', {solicitud: solicitud})
+			        	}
+			        }
+			   }, html5.onError);
+			});
+
+			setTimeout(function(){
+				paquete.testeo();
+			},1000);
+		},
 		validaSesion:function()
 		{
 			var salida  = false;
@@ -99,14 +149,55 @@ angular.module('app.services', [])
 		        salida  = false;
 		    }
 		    return salida;
-		}
+		},
+		log:function() {
+		    alert(hayNotificacion);
+		 }
 
 	}
+
+
+	/*var messageQueue = [];
+
+  function log() {
+    if (messageQueue.length) {
+      $log.log('batchLog messages: ', messageQueue);
+      messageQueue = [];
+    }
+  }
+
+  // start periodic checking
+  $interval(log, 50000);
+
+  return function(message) {
+    messageQueue.push(message);
+  }*/
+
+
+// start periodic checking
+	$interval(paquete.testeo(), 1000);
 
 	return paquete;
 
 }])
 
-.service('BlankService', [function(){
+.service('testeo', ['$interval', '$log', function($interval, $log) {
+
+	var pquetote = 
+	{
+		testeo:function()
+		{	
+			//alert("sddasdsad");
+			if(hayNotificacion != 0)
+			{
+				//alert("nueva notificacion");
+				/*paquete.popAlert("Prueba","Mensaje",function(){
+
+				},ionicPopup);*/
+			}
+		}
+	}
+
+	$interval(pquetote.testeo(), 2000);
 
 }]);

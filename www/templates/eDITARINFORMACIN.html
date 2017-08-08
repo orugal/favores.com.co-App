@@ -1,3 +1,49 @@
-<ion-view title="EDITAR INFORMACIÓN" id="page6">
-  <ion-content padding="true" class="has-header"></ion-content>
+<ion-view title="EDITAR INFORMACIÓN" id="page6" ng-init="initDataUsuario()">
+  <ion-content padding="false">
+    <!--<img src="img/6VHZjyHiRPCRCkQHIRkR_logo.png" width="40%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">-->
+    <div class="row">
+    <div class="col col-5"></div>
+    <div class="col col-90">
+
+    <form id="formDataPersona" class="list" ng-submit="actualizaDataUsuario()">
+        <h2>DATOS PERSONALES</h2>
+      <ion-list id="login-list2">
+        <label class="item item-input">
+          <input type="text" placeholder="Nombre y apellidos" id="nombres" name="nombres" ng-model="nombres" />
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Correo electrónico" id="email" name="email" ng-model="email" />
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Número celular" id="celular" name="celular" ng-model="celular" />
+        </label>
+        <label class="item item-input" >
+          <input type="text" placeholder="Ciudad" id="ciudad" name="ciudad" ng-model="ciudad" />
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button type="submit" id="login-button1" class="button button-positive  button-block">ACTUALIZAR DATOS</button>
+    </form>
+
+    <form id="formCambioClave" class="list" ng-submit="cambioClave()">
+        <h2>CAMBIO DE CLAVE</h2>
+      <ion-list id="login-list2">
+        <label class="item item-input" >
+          <input type="password" placeholder="Contraseña actual" id="clave" name="clave" ng-model="clave" />
+        </label>
+        <label class="item item-input" >
+          <input type="password" placeholder="Contraseña" id="nclave" name="nclave" ng-model="nclave" />
+        </label>
+        <label class="item item-input" >
+          <input type="password" placeholder="Repita la contraseña" id="rclave" name="rclave" ng-model="rclave" />
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button type="submit" id="login-button1" class="button button-positive  button-block">CAMBIAR CLAVE</button>
+    </form>
+     <!--<a ui-sref="inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>-->
+    </div>
+    <div class="col col-5"></div>
+  </div>
+  </ion-content>
 </ion-view>

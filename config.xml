@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.favoresdemo894583" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Favores.com.co</name>
-  <description>&#xD;
-      Prestamos culquier tipo de favor en cualquier parte de Colombia      &#xD;
+<widget id="com.ionicframework.favoresdemo894583" version="1.7.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Favores</name>
+  <description>&#xD;&#xD;
+      Prestamos culquier tipo de favor en cualquier parte de Colombia      &#xD;&#xD;
   </description>
-  <author email="kyo20052@gmail.com" href="http://www.orugal.com.co/">&#xD;
-      @orugal    &#xD;
+  <author email="info@wanabe.com.co" href="http://www.wannabe.com.co/">&#xD;&#xD;
+      Wannabe.com.co    &#xD;&#xD;
   </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -20,14 +20,12 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="orientation" value="portrait"/>
-  <preference name="websecurity" value="disable" />
-  <preference name="StatusBarBackgroundColor" value="#2A5BA7" />
-
+  <preference name="websecurity" value="disable"/>
+  <preference name="StatusBarBackgroundColor" value="#2A5BA7"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
-  <plugin name="cordova-plugin-whitelist" version="1.2.0" />
-
+  <plugin name="cordova-plugin-whitelist" version="1.2.0"/>
   <platform name="android">
     <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi"/>

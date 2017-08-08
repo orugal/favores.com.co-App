@@ -20,11 +20,22 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('nuevaSolicitud', {
+  /*.state('nuevaSolicitud', {
     url: '/page2',
     templateUrl: 'templates/favor.html',
     controller: 'nuevaSolicitud'
+  })*/
+
+.state('menu.solicitud', {
+    url: '/page2',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/favor.html',
+        controller: 'nuevaSolicitud'
+      }
+    }
   })
+
 
   .state('misolicitudes', {
     url: '/page3',
@@ -67,6 +78,11 @@ angular.module('app.routes', [])
     url: '/page10',
     templateUrl: 'templates/registro.html',
     controller: 'registroCtrl'
+  })
+  .state('olvidoClave', {
+    url: '/pageClave',
+    templateUrl: 'templates/olvidoClave.html',
+    controller: 'olvidoClave'
   })
 
   .state('login', {
@@ -161,7 +177,7 @@ angular.module('app.routes', [])
 var session = localStorage["id_usuario"];
 if(session != undefined)
 {
-  $urlRouterProvider.otherwise('/side-menu21/page1')
+  $urlRouterProvider.otherwise('/side-menu21/page2')
 }
 else
 {

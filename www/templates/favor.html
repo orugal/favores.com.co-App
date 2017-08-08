@@ -1,55 +1,65 @@
-<ion-view id="page8" title='<center>NUEVA SOLICITUD</center>' left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false" ng-init="initSolicitudN()">
-  <ion-nav-bar class="bar-positive">
-      <!--<ion-nav-back-button></ion-nav-back-button>-->
-      <ion-nav-buttons side="left">
-       <a class="button button-icon button-clear ion-chevron-left" menu-toggle="left"  ui-sref="menu.sERVICIOS"></a>
-      </ion-nav-buttons>
-      </ion-nav-buttons>
-      <ion-nav-buttons side="right">
-        <!--<a ui-sref="menu.notificaciones" class="button button-icon button-clear ion-android-globe"></a>-->
-      </ion-nav-buttons>
-  </ion-nav-bar>
+<ion-view id="page8" ng-init="initSolicitudN()" title='<center><img class="title-image" src="img/logoMini.png" style="width:40%;margin:4% 0 0 0"/></center>' left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="true">
+  <div class="bar bar-subheader bar-positive" style="background:#3163AF !important;">
+    <h2 class="title">Si es demasiado urgente, llámanos.</h2>
+  </div>
 
-  <ion-content padding="true" class="has-header">
+  
 
-    <div class="row">
-      <div class="col col-5"></div>
-      <div class="col col-90">
 
-      <form id="formRegistro" class="list" ng-submit="saveSolicitud()">
-        <h3 style="color:#2B5BA7;text-align: center">SOLICITAR FAVOR</h3>
+  <ion-content padding="true" class="has-header" style="margin:15% 0 0">
+  <form id="formRegistro" class="list" ng-submit="saveSolicitud()">
+        <h3 style="color:#2B5BA7;text-align: center">CREAR UNA SOLICITUD</h3>
         <ion-list id="login-list2">
-          <p><center>Seleccione el tipo de favor que desea solicitar.</center></p>
+          <p>Para que podamos prestarle un sevicio de calidad debe completar el siguiente formulario.</p>
+          <p>Recuerda que trabajamos de lunes a viernes de 7am a 6pm, sabado de 8am a 1pm</p><br>
+          <!--<p><center>Seleccione el tipo de favor que desea solicitar.</center></p>-->
           <label class="item item-input" id="login-input1">
-            <select style="width: 100%;background: transparent;height:25px;border:none;box-shadow: none" ng-model="servicio" id="servicio" name="servicio" ng-change="poneFormulario()">
+            <select style="width: 100%;background: transparent;height:25px;border:none;box-shadow: none" ng-model="servicio" id="servicio" name="servicio" ><!--ng-change="poneFormulario()"-->
               <option value="">Tipo de favor</option>
               <option ng-repeat="servi in listaServicios" value="{{servi.id}}" data-form="{{servi.iva}}" data-ejemplo="{{servi.ejemplo}}"  style="text-transform: uppercase">{{servi.titulo}}</option>
             </select>
           </label>
-          <input type="hidden" name="formCaja" id="formCaja">
+          <input type="hidden" name="formCaja" id="formCaja" value="1">
           <p id="ejemplo" style="padding:2%"></p>
           <!-- Formulario sin origen ni destino-->
-          <div class="forms" id="form1" style="float:left;width:100%;margin:5% 0 0 0;display: none">
+          <div class="forms" id="form1">
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Fecha</span>
                 <input name="fecha" id="fecha" type="date"  data-date-format="DD MMMM YYYY"/>
               </label>
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Hora</span>
-                <input name="hora" id="hora" type="text"/>
+                <input name="hora" id="hora" type="text" ng-click="openTimePicker1('#hora')"/>
               </label>
 
-              <button type="button" class="button button-positive  button-block"  ng-click="openTimePicker1('#hora')">Seleccionar hora</button>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Dirección</span>
+                <input type="text" name="direccion1" id="direccion1"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Persona de contacto</span>
+                <input type="text" name="persona1" id="persona1"/>
+              </label>
+              <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
+                <span class="input-label">Teléfono</span>
+                <input type="text" name="telefono1" id="telefono1"/>
+              </label>
+
+              <!--<button type="button" class="button button-positive  button-block"  >Seleccionar hora</button>-->
 
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Especifique los detalles del favor</span>
-                <textarea name="contenidoFavor" id="contenidoFavor" placeholder="Escriba una breve descripción" rows="5"></textarea>
+                <textarea name="contenidoFavor" id="contenidoFavor" placeholder="Escriba detalladamente su solicitud, para que todos lo tengamos claro." rows="5"></textarea>
               </label>
               <div class="spacer" style="height: 40px;"></div>
               
               <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
-              <a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+              <!--<a ui-sref="menu.inicio" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>-->
           </div>
+
+
+
+
 
           <!-- Formulario con datos de origen-->
           <div class="forms" id="form2" style="float:left;width:100%;margin:5% 0 0 0;display:none">
@@ -80,7 +90,7 @@
               </label>
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Especifique los detalles del favor</span>
-                <textarea name="contenidoFavor2" id="contenidoFavor2" placeholder="Escriba una breve descripción" rows="5"></textarea>
+                <textarea name="contenidoFavor2" id="contenidoFavor2" placeholder="Escriba detalladamente su solicitud, para que todos lo tengamos claro." rows="5"></textarea>
               </label>
               <div class="spacer" style="height: 40px;"></div>
               
@@ -116,7 +126,7 @@
               </label>
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Especifique los detalles del favor</span>
-                <textarea name="contenidoFavor3" id="contenidoFavor3" placeholder="Escriba una breve descripción" rows="5"></textarea>
+                <textarea name="contenidoFavor3" id="contenidoFavor3" placeholder="Escriba detalladamente su solicitud, para que todos lo tengamos claro." rows="5"></textarea>
               </label>
               <div class="spacer" style="height: 40px;"></div>
               
@@ -168,7 +178,7 @@
               </label>
               <label class="item item-input  item-stacked-label" style="border:none;background: #fff;margin:0 0 5% 0">
                 <span class="input-label">Especifique los detalles del favor</span>
-                <textarea name="contenidoFavor4" id="contenidoFavor4" placeholder="Escriba una breve descripción" rows="5"></textarea>
+                <textarea name="contenidoFavor4" id="contenidoFavor4" placeholder="Escriba detalladamente su solicitud, para que todos lo tengamos claro." rows="5"></textarea>
               </label>
               <div class="spacer" style="height: 40px;"></div>
               <button type="submit" class="button button-positive  button-block">SOLICITAR FAVOR</button>
@@ -177,18 +187,38 @@
 
         </ion-list>
       </form>
-      </div>
-      <div class="col col-5"></div>
-  </div>
-
+  
   </ion-content>
-
 </ion-view>
 
 
 
 
 
+<!--
+<ion-view id="page8" title='<center>NUEVA SOLICITUD</center>' left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false" ng-init="initSolicitudN()">
+  <ion-nav-bar class="bar-positive">
+      
+      <ion-nav-buttons side="left">
+       <a class="button button-icon button-clear ion-chevron-left" menu-toggle="left"  ui-sref="menu.sERVICIOS"></a>
+      </ion-nav-buttons>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        
+      </ion-nav-buttons>
+  </ion-nav-bar>
 
+  <ion-content padding="true" class="has-header">
 
+    <div class="row">
+      <div class="col col-5"></div>
+      <div class="col col-90">
 
+      
+      </div>
+      <div class="col col-5"></div>
+  </div>
+
+  </ion-content>
+
+</ion-view>-->

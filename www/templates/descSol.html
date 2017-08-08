@@ -1,4 +1,4 @@
-<ion-view id="page8" title='<center>DETALLE DEL SERVICIO</center>' ng-init="initDetalleSolicitud()" left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false">
+<ion-view id="page8" title='<center>DETALLE DEL SERVICIO</center>' ng-init="initDetalleSolicitud()" left-buttons="leftButtons" right-buttons="rightButtons" hide-back-button="false"  cache-view="false">
   <ion-nav-bar class="bar-positive">
       <!--<ion-nav-back-button></ion-nav-back-button>-->
       <ion-nav-buttons side="left">
@@ -22,32 +22,34 @@
 
       <h3 style="color:#2B5BA7">SOLICITUD NRO: {{dataSolicitud.idSolicitud}}</h3>
       <h4 style="color:#2B5BA7">Solicitud de tipo: {{dataSolicitud.servicio}}</h4>
-      <h5>Estado: {{dataSolicitud.estadoText}}</h5>
+      <h5 style="padding:0 0 0 5%">Estado: {{dataSolicitud.estadoText}}</h5>
       <!--<h6>Fecha de solicitud: {{dataSolicitud.fechaSolicitud}}</h6>-->
-      <h5>Fecha: {{dataSolicitud.fechaFavor}}</h5>
-      <h5>Hora: {{dataSolicitud.hora}}</h5>
+      <h5 style="padding:0 0 0 5%">Fecha: {{dataSolicitud.fechaFavor}}</h5>
+      <h5 style="padding:0 0 0 5%">Hora: {{dataSolicitud.hora}}</h5>
 
       <h4 ng-if="dataSolicitud.direccion1 != null " style="color:#2B5BA7">Datos de origen</h4>
-      <h5 ng-if="dataSolicitud.direccion1 != null ">Dirección: {{dataSolicitud.direccion1}}</h5>
-      <h5 ng-if="dataSolicitud.persona1 != null ">Contacto: {{dataSolicitud.persona1}}</h5>
-      <h5 ng-if="dataSolicitud.telefono1 != null ">Teléfono: {{dataSolicitud.telefono1}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.direccion1 != null ">Dirección: {{dataSolicitud.direccion1}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.persona1 != null ">Contacto: {{dataSolicitud.persona1}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.telefono1 != null ">Teléfono: {{dataSolicitud.telefono1}}</h5>
       
       <h4 ng-if="dataSolicitud.direccion2 != null " style="color:#2B5BA7">Datos de destino</h4>
-      <h5 ng-if="dataSolicitud.direccion2 != null ">Dirección: {{dataSolicitud.direccion2}}</h5>
-      <h5 ng-if="dataSolicitud.persona2 != null ">Contacto: {{dataSolicitud.persona2}}</h5>
-      <h5 ng-if="dataSolicitud.telefono2 != null ">Teléfono: {{dataSolicitud.telefono2}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.direccion2 != null ">Dirección: {{dataSolicitud.direccion2}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.persona2 != null ">Contacto: {{dataSolicitud.persona2}}</h5>
+      <h5 style="padding:0 0 0 5%" ng-if="dataSolicitud.telefono2 != null ">Teléfono: {{dataSolicitud.telefono2}}</h5>
 
       <h4 style="color:#2B5BA7">Descripción del servicio</h4>
       <p style="text-align: justify;">
         {{dataSolicitud.texto}} 
       </p>
 
-      <h6 ng-if="dataSolicitud.prestador" style="color:#2B5BA7">DATOS DEL PRESTADOR DEL SERVICIO</h6>
-      <div ng-if="dataSolicitud.prestador" class="list">
+      <h6 ng-if="dataSolicitud.prestador != 0" style="color:#2B5BA7">DATOS DEL PRESTADOR DEL SERVICIO</h6>
+      <div ng-if="dataSolicitud.prestador != 0" class="list">
           <a class="item item-avatar" href="#">
-            <img src="img/user.jpg">
+            <img src="http://www.favores.com.co/images/{{dataSolicitud.dataPrestador.imagen}}">
             <h2>{{dataSolicitud.dataPrestador.nombres}} {{dataSolicitud.dataPrestador.apellidos}}</h2>
             <p>{{dataSolicitud.dataPrestador.email}}</p>
+            <p>{{dataSolicitud.dataPrestador.placa}}</p>
+            <p>{{dataSolicitud.dataPrestador.celular}}</p>
           </a>
       </div>
 
@@ -56,21 +58,35 @@
       <h1 style="color:#2B5BA7">{{dataSolicitud.costo |currency:$:0}}</h1>
       </div>
 
+      <div class="spacer" style="height: 40px;"></div>
+      <div  ng-if="dataSolicitud.costo !=0">
+        <h6 ng-if="dataSolicitud.estado == 8" style="color:#2B5BA7">GESTIÓN USUARIO</h6>
+        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,7)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-positive  button-block">APROBAR SERVICIO</button>
+        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,6)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-assertive  button-block">RECHAZAR SERVICIO</button>
+      </div>
+
       <div style="float:left;width: 100%" ng-if="dataSolicitud.estado!=4 && dataSolicitud.estado!=5 && dataSolicitud.estado!=6">
-      <h6 ng-if="dataSolicitud.prestador != 0 " style="color:#2B5BA7">PREGUNTAR AL PRESTADOR</h6>
+
+      <h6  style="color:#2B5BA7">PREGUNTAR AL PRESTADOR</h6>
 
         <label class="item item-input">
           <textarea placeholder="Pregunte lo que necesite al prestador"  rows="5" id="pregunta" name="pregunta" ng-model="pregunta"></textarea>
         </label>
 
       <button type="button" ng-click="enviaPregunta(dataSolicitud.estadoText,dataSolicitud.idSolicitud)" class="button button-positive  button-block">REALIZAR PREGUNTA</button>
-      </div>
 
-      <div class="spacer" style="height: 40px;"></div>
-      <div  ng-if="dataSolicitud.costo !=0">
-        <h6 ng-if="dataSolicitud.estado == 8" style="color:#2B5BA7">GESTIÓN USUARIO</h6>
-        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,7)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-positive  button-block">APROBAR SERVICIO</button>
-        <button ng-click="resultadoUsuario(dataSolicitud.idSolicitud,6)" type="button"  ng-if="dataSolicitud.estado == 8" class="button button-positive  button-block button-clear">RECHAZAR SERVICIO</button>
+      <div style="float:left;width: 100%" ng-if="transacciones.cantidad != 0">
+        <h6  style="color:#2B5BA7">PREGUNTAS REALIZADAS</h6>
+        <div class="card" ng-repeat="tra in transacciones.datos">
+          <div class="item item-text-wrap">
+             <h2>{{tra.nombres}} {{tra.apellidos}}</h2>
+             <ion-badge item-right>{{tra.fecha | date:'dd-MM-yyyy HH:mm' }}</ion-badge><br>
+              <p>{{tra.textoTransaccion}}</p>
+          </div>
+        </div>
+      </div>  
+
+
       </div>
 
     </div>

@@ -1,0 +1,23 @@
+<ion-view title="Registro" id="pageClave"  hide-nav-bar="true" ng-init="initRecordar()">
+  <ion-content padding="false">
+    <img src="img/6VHZjyHiRPCRCkQHIRkR_logo.png" width="40%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+    <div class="row">
+    <div class="col col-5"></div>
+    <div class="col col-90">
+
+    <form id="formRecordar" class="list" ng-submit="recordarClave()">
+      <ion-list id="login-list2">
+        <p>Escriba el correo electrónico con el que se registro.</p>
+        <label class="item item-input">
+          <input type="text" placeholder="Correo electrónico" id="email" name="email" ng-model="email" />
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button type="submit" id="login-button1" class="button button-positive  button-block">RECORDAR CLAVE</button>
+      <a ui-sref="login" id="login-button2" class="button button-positive  button-block button-clear">CANCELAR</a>
+    </form>
+    </div>
+    <div class="col col-5"></div>
+  </div>
+  </ion-content>
+</ion-view>

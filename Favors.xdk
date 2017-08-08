@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "0644ae07-29ee-4cf6-8b16-63f71fbfbdd7",
-      "lastModifiedDate": 1479561579670,
+      "lastModifiedDate": 1497118788929,
       "creationDate": 1479561525080
     },
     "gameAssetDirectory": "asset",
@@ -41,28 +41,83 @@
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "23",
           "android-installLocation": "auto",
-          "android-signed": true
+          "android-signed": true,
+          "Orientation": "portrait",
+          "Fullscreen": false,
+          "AndroidLaunchMode": "singleTop"
         },
         "isActive_": true,
-        "certificateId_": "",
-        "appName_": "Favors",
-        "appID_": "not.yet.specified",
+        "certificateId_": "MFDnrl5ypE2VEzUn-HToPg2",
+        "appName_": "Favores",
+        "appID_": "favores.com.co",
         "appAccess_": {
           "mode": "whitelist",
           "network": [
             "*"
           ],
-          "intents": [],
-          "navigation": []
+          "intents": [
+            "http://*"
+          ],
+          "navigation": [],
+          "properties": {}
         },
         "addlPermissions_": "",
-        "icons_": [],
-        "splashes_": [],
-        "appVersion_": "0.0.1",
-        "appVersionCode_": "1",
+        "icons_": [
+          {
+            "density": "ldpi",
+            "relPath": "package-assets/icon/drawable-ldpi-icon.png",
+            "width": 36,
+            "height": 36
+          },
+          {
+            "density": "mdpi",
+            "relPath": "package-assets/icon/drawable-mdpi-icon.png",
+            "width": 48,
+            "height": 48
+          },
+          {
+            "density": "hdpi",
+            "relPath": "package-assets/icon/drawable-hdpi-icon.png",
+            "width": 72,
+            "height": 72
+          },
+          {
+            "density": "xhdpi",
+            "relPath": "package-assets/icon/drawable-xhdpi-icon.png",
+            "width": 96,
+            "height": 96
+          }
+        ],
+        "splashes_": [
+          {
+            "relPath": "package-assets/splash/drawable-port-mdpi-screen.png",
+            "density": "ldpi",
+            "height": 426,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "package-assets/splash/drawable-port-hdpi-screen.png",
+            "density": "hdpi",
+            "height": 640,
+            "width": 480,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "package-assets/splash/drawable-port-xxxhdpi-screen.png",
+            "density": "xhdpi",
+            "height": 960,
+            "width": 720,
+            "orientation": "portrait"
+          }
+        ],
+        "appVersion_": "1.7.4",
+        "appVersionCode_": "23",
         "signed_": true,
         "crosswalkVersion_": "19",
-        "cordovaCLIVersion_": "6.2.0"
+        "cordovaCLIVersion_": "6.2.0",
+        "appDescription_": "Solicita cualquier tipo de favor que necesites ejecutar en Colombia.",
+        "appAuthor_": "Wannabe.com.co"
       },
       "iOS": {
         "platform_": "ios",
@@ -72,7 +127,7 @@
           "deployment-target": "8.0",
           "ios-configuration": "adhoc"
         },
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "Favors",
         "appID_": "not.yet.specified",
@@ -96,7 +151,7 @@
         "runtime_": "Cordova 3.x",
         "name_": "Windows8",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "Favors",
         "appID_": "not.yet.specified",
@@ -198,26 +253,8 @@
         "description": "Cordova Compatibility Plugin",
         "data": {},
         "dependedBy": [],
-        "custom": "true"
-      },
-      {
-        "id": "cordova-plugin-console",
-        "name": "Console",
-        "version": "1.0.4",
-        "originType": "cordova.io",
-        "origin": "cordova-plugin-console",
-        "gitref": "",
-        "paramvals": {},
-        "sourceLocation": "plugins/cordova-plugin-console",
-        "selectedState": "Included",
-        "checksum": "fde8ce2",
-        "dependsOn": [],
-        "topLevel": true,
-        "permissions": {},
-        "description": "Cordova Console Plugin",
-        "data": {},
-        "dependedBy": [],
-        "custom": "true"
+        "custom": "true",
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-device",
@@ -235,7 +272,8 @@
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-splashscreen",
@@ -253,7 +291,8 @@
         "permissions": {},
         "description": "Cordova Splashscreen Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-statusbar",
@@ -310,6 +349,32 @@
         "cordovaVersion": ">=3.0.0",
         "permissions": {},
         "description": "Ionic Keyboard Plugin",
+        "data": {},
+        "dependedBy": []
+      },
+      {
+        "id": "cordova-plugin-customurlscheme",
+        "name": "Custom URL scheme",
+        "version": "4.3.0",
+        "originType": "repo",
+        "origin": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
+        "gitref": "",
+        "subdir": ".",
+        "paramvals": {
+          "URL_SCHEME": "favoresApp",
+          "ANDROID_SCHEME": " ",
+          "ANDROID_HOST": " ",
+          "ANDROID_PATHPREFIX": "/"
+        },
+        "sourceLocation": "plugins/cordova-plugin-customurlscheme",
+        "selectedState": "Included",
+        "checksum": "22bf87cd",
+        "dependsOn": [],
+        "topLevel": true,
+        "cordovaVersion": ">=3.0.0",
+        "author": "Eddy Verbruggen",
+        "permissions": {},
+        "description": "\r\n    Launch your app by using this URL:  mycoolapp://\r\n    You can add a path and even pass params like this: mycoolerapp://somepath?foo=bar\r\n  ",
         "data": {},
         "dependedBy": []
       }

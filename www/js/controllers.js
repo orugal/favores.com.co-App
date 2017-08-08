@@ -1,4 +1,5 @@
 var $ =jQuery.noConflict();
+var hayNotificacion = 0;
 angular.module('app.controllers', [])
   
 .controller('inicioCtrl', ['$scope', '$stateParams','$ionicLoading','funciones','$ionicPopup','$ionicLoading','$location', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -115,6 +116,52 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 	}
 })
 
+
+.controller('olvidoClave',function ($scope, $http, $q, $stateParams,$state,$ionicLoading,funciones,$ionicPopup,$ionicLoading,$location) 
+{
+	$scope.mostrarMenu = 0;
+	$scope.initRecordar = function()
+	{
+
+	}
+	$scope.recordarClave = function()
+	{
+		//valido campos
+		$scope.email = $("#email").val();
+		if($scope.email == undefined || $scope.email == "")
+		{
+			funciones.popAlert("Complete los campos","Debe escribir el correo electrónico con el que se registró.",function(){},$ionicPopup);
+		}
+		else if($scope.email != "" && !funciones.validaMail($scope.email))
+		{
+			funciones.popAlert("Complete los campos","El correo electrónico no es correcto, por favor verifique.",function(){},$ionicPopup);
+		}
+		else
+		{
+			funciones.popConfirm("CONFIRMACIÓN","Está a punto de hacer una solicitud de cambio de contraseña, desea confinuar",function(){
+				//procdeo a consular ajax para hacer la inserción del usuario nuevo
+				var parametros = $("#formRecordar").serialize()+"&accion=11";
+				funciones.consultaApi(funciones.urlAPi,parametros,function(json){
+					//realizo la validació
+					if(json.continuar == 1)
+					{
+						funciones.popAlert("RECORDAR CLAVE",json.mensaje,function(){
+							//debo enrutar al inicio de la app y levantar la sessión
+						},$ionicPopup);
+					}
+					else
+					{
+						funciones.popAlert("RECORDAR CLAVE",json.mensaje,function(){
+
+						},$ionicPopup);
+					}
+				},true,$ionicLoading,$ionicPopup)
+			},$ionicPopup);
+
+			
+		}
+	}
+})
 //controlador del login
 .controller('loginCtrl',function ($scope,$http, $q, $stateParams,$state,$ionicLoading,funciones,$ionicPopup,$ionicLoading,$location) 
 {
@@ -137,7 +184,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 		else
 		{
 			//procdeo a consular ajax para hacer la inserción del usuario nuevo
-			var parametros = $("#formLogin").serialize()+"&accion=2";
+			var parametros = $("#formLogin").serialize()+"&codigoCelular="+localStorage["reg"]+"&accion=2";
 			funciones.consultaApi(funciones.urlAPi,parametros,function(json){
 				//realizo la validació
 				if(json.continuar == 1)
@@ -160,7 +207,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 
 })
   
-.controller('sERVICIOSCtrl', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,funciones,$ionicPopup,$ionicLoading,$location){
+.controller('sERVICIOSCtrl', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,funciones,$ionicPopup,$ionicLoading,$location,testeo){
 
 	$scope.mostrarMenu = 1;
 	$scope.listaServicios = [];
@@ -168,6 +215,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 	$scope.initServicios = function()
 	{
 		$scope.getServicios();
+		testeo.testeo()
 	}
 	$scope.refreshServicios = function()
 	{
@@ -203,14 +251,14 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 		if(json.continuar == 1)
 		{
 			$scope.dataServicio  = json.datos;
-			$scope.contenidoPanel  = json.datos[0].contenido
+			$scope.contenidoPanel  = json.datos[0].resumen+"<br><br>"+json.datos[0].contenido
 		}
 	},true,$ionicLoading,$ionicPopup)
 	
 	//alert("dkfhsdkfjdhskf");
 })
    
-.controller('nuevaSolicitud', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location,ionicTimePicker) 
+.controller('nuevaSolicitud', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location,ionicTimePicker,testeo) 
 {
 
 	$scope.listaServicios = [];
@@ -223,6 +271,8 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 	$scope.initSolicitudN = function()
 	{
 		$scope.getServicios();
+		testeo.testeo();
+
 	}
 
 	$scope.openTimePicker1 = function (caja) {
@@ -303,17 +353,39 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 		//valido el formulario para saber que validaciones debo hacer
 		if(form == 1)//formulario sencillo
 		{
+			//alert("dfksdhfkjhk")
+			var tipoFavor		=	$("#servicio").val();
 			var fecha			=	$("#fecha").val();
 			var hora			=	$("#hora").val();
+			var direccion1 	 	= 	$("#direccion1").val();
+			var persona1  		= 	$("#persona1").val();
+			var telefono1  		= 	$("#telefono1").val();
 			var contenidoFavor	=	$("#contenidoFavor").val();
+			
 			//valido campos
-			if(fecha == "")
+			if(tipoFavor == "")
+			{
+				funciones.popAlert("Formulario de solicitud","Seleccione el tipo de favor",function(){},$ionicPopup);
+			}
+			else if(fecha == "")
 			{
 				funciones.popAlert("Formulario de solicitud","Seleccione la fecha del favor",function(){},$ionicPopup);
 			}
 			else if(hora == "")
 			{
 				funciones.popAlert("Formulario de solicitud","Seleccione la hora del favor",function(){},$ionicPopup);
+			}
+			else if(direccion1 == "")
+			{
+				funciones.popAlert("Formulario de solicitud","Por favor escriba la dirección de origen.",function(){},$ionicPopup);
+			}
+			else if(persona1 == "")
+			{
+				funciones.popAlert("Formulario de solicitud","Por favor escriba el nombre del contacto con el que debemos comunicarnos.",function(){},$ionicPopup);
+			}
+			else if(telefono1 == "")
+			{
+				funciones.popAlert("Formulario de solicitud","Por favor escriba un número de teléfono de contacto.",function(){},$ionicPopup);
 			}
 			else if(contenidoFavor == "")
 			{
@@ -322,7 +394,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 			else
 			{
 				formCompleto 	=	true;
-				var parametros = "form="+form+"&accion=6&fecha="+fecha+"&hora="+hora+"&texto="+contenidoFavor+"&usuario="+session+"&servicio="+servicio;
+				var parametros = "form="+form+"&accion=6&fecha="+fecha+"&hora="+hora+"&direccion1="+direccion1+"&persona1="+persona1+"&telefono1="+telefono1+"&texto="+contenidoFavor+"&usuario="+session+"&servicio="+servicio;
 			}
 		}
 		else if(form == 2)//solo datos de origen
@@ -470,6 +542,12 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 						if(json.continuar == 1)
 						{
 							funciones.popAlert("SOLICITUD EXITOSA",json.mensaje,function(){
+								$("#fecha").val("");
+								$("#hora").val("");
+								$("#direccion1").val("");
+								$("#persona1").val("");
+								$("#telefono1").val("");
+								$("#contenidoFavor").val("");
 								$state.go('misolicitudes');
 							},$ionicPopup);
 						}
@@ -486,14 +564,16 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 
 })
    
-.controller('missolicitudes', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location) 
+.controller('missolicitudes', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location,testeo) 
 {
 
 	$scope.listaSolicitudes = [];
+
 	var session = localStorage["id_usuario"];
 	$scope.initSolicitudes = function()
 	{
 		$scope.getSolicitudes();
+		testeo.testeo()
 	}
 	$scope.refreshSolicitudes = function()
 	{
@@ -502,7 +582,6 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 	}
 	$scope.getSolicitudes = function()
 	{
-		
 		var parametros = "&accion=5&usuario="+session;
 		funciones.consultaApi(funciones.urlAPi,parametros,function(json){
 			//realizo la validació
@@ -512,12 +591,20 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 			}
 		},true,$ionicLoading,$ionicPopup)
 	}
+
+	$scope.$on('$viewContentLoading', 
+		function(event, viewConfig){ 
+			//alert("refrescando vista")
+		    scope.getSolicitudes();
+	});
+
 })
 
 
-.controller('descSolCtrl', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location) 
+.controller('descSolCtrl', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location,testeo) 
 {
 	$scope.dataSolicitud = [];
+	$scope.transacciones  = [];
 	var session = localStorage["id_usuario"];
 	$scope.myGoBack = function() 
 	{
@@ -527,6 +614,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 	$scope.initDetalleSolicitud = function()
 	{
 		$scope.getInfoSolicitud();
+		testeo.testeo()
 	}
 
 	$scope.refreshSolicitudes = function()
@@ -543,6 +631,26 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 			if(json.continuar == 1)
 			{
 				$scope.dataSolicitud  = json.datos[0];
+				$scope.getTransacciones();
+				//ahora debo traer las transacciones de las solicitudes
+			}
+		},true,$ionicLoading,$ionicPopup)
+	}
+	$scope.getTransacciones= function()
+	{
+		var parametros = "accion=12&idSolicitud="+$stateParams.solicitud+"&usuario="+session;
+		funciones.consultaApi(funciones.urlAPi,parametros,function(json){
+			//realizo la validació
+			if(json.continuar == 1)
+			{
+				//alert(json.datos[0].nombres);
+				$scope.transacciones = json;
+				$scope.$digest();
+			}
+			else
+			{
+				$scope.transacciones = [];
+				$scope.$digest();
 			}
 		},true,$ionicLoading,$ionicPopup)
 	}
@@ -563,6 +671,7 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 					{
 						funciones.popAlert("ATENCIÓN",json.mensaje,function(){
 							$("#pregunta").val("");
+							$scope.getTransacciones();
 						},$ionicPopup);
 					}
 					else
@@ -588,15 +697,19 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 					if(json.continuar == 1)
 					{
 						funciones.popAlert("ATENCIÓN",json.mensaje,function(){
-							//$("#pregunta").val("");
-							//$state.go();
+							//alert("jjdfhdsjkfdhskj")
+							//$state.go('detalleSolicitud', {solicitud: solicitud})
+							//location.reload()
+							$scope.getInfoSolicitud();
 						},$ionicPopup);
 					}
 					else
 					{
 						funciones.popAlert("ATENCIÓN",json.mensaje,function(){
-							//$("#pregunta").val("");
-							//$state.go();
+							//alert("jjdfhdsjkfdhskj")
+							//$state.go('detalleSolicitud', {solicitud: solicitud})
+							//location.reload()
+							$scope.getInfoSolicitud();
 						},$ionicPopup);
 					}
 				},true,$ionicLoading,$ionicPopup)
@@ -610,14 +723,156 @@ function ($scope, $stateParams,$ionicLoading,funciones,$ionicPopup,$ionicLoading
 
 
    
-.controller('eDITARINFORMACINCtrl', ['$scope', '$stateParams','$ionicLoading','funciones', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+.controller('eDITARINFORMACINCtrl',function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location,testeo) 
+{
+	$scope.dataUsuario = [];
+	$scope.nombres = "";
+	$scope.email = "";
+	$scope.celular = "";
+	$scope.ciudad = "";
+	var tituloPop = "VERIFIQUE EL FORMULARIO"
+	var session = localStorage["id_usuario"];
+	$scope.initDataUsuario = function()
+	{
+		$scope.consultaDataUsuario();
+		testeo.testeo()
+	}
+	$scope.consultaDataUsuario = function()
+	{
+		var parametros = "accion=13&usuario="+session;
+		funciones.consultaApi(funciones.urlAPi,parametros,function(json){
+			//realizo la validación
+			if(json.continuar == 1)
+			{
+				//alert(json.datos)
+				$scope.nombres		=	json.datos.nombres;
+				$scope.email		=	json.datos.email;
+				$scope.celular		=	json.datos.celular;
+				$scope.ciudad		=	json.datos.ciudad;
+				$scope.digest()
+			}
+			else
+			{
+				$scope.nombres		=	"";
+				$scope.email		=	"";
+				$scope.celular		=	"";
+				$scope.ciudad		=	"";;
+				$scope.digest()
+			}
+		},true,$ionicLoading,$ionicPopup)
+	}
+	$scope.cambioClave = function()
+	{
+		$scope.clave  = $("#clave").val();
+		$scope.nclave = $("#nclave").val();
+		$scope.rclave = $("#rclave").val();
+		//valido campos
+		if($scope.clave == "" || $scope.clave == undefined)
+		{
+			funciones.popAlert(tituloPop,"Debe escribir su clave actual",function(){},$ionicPopup);
+		}
+		else if($scope.nclave == "" || $scope.nclave == undefined)
+		{
+			funciones.popAlert(tituloPop,"Debe escribir su nueva actual",function(){},$ionicPopup);
+		}
+		else if($scope.rclave == "" || $scope.rclave == undefined)
+		{
+			funciones.popAlert(tituloPop,"Debe repetir su nueva clave",function(){},$ionicPopup);
+		}
+		else if($scope.rclave != "" && $scope.rclave != $scope.nclave)
+		{
+			funciones.popAlert(tituloPop,"Las contraseñas no coinciden, por favor verifique",function(){},$ionicPopup);
+		}
+		else
+		{
+			funciones.popConfirm("CONFIRMACIÓN","Estáa punto de cambiar su clave de acceso a la aplicación, desea continuar?",function(){
+				var parametros = $("#formCambioClave").serialize()+"&accion=15&usuario="+session;
+					funciones.consultaApi(funciones.urlAPi,parametros,function(json){
+						//realizo la validació
+						if(json.continuar == 1)
+						{
+							funciones.popAlert("ATENCIÓN",json.mensaje,function(){
+								$("#clave").val("");
+								$("#nclave").val("");
+								$("#rclave").val("");
+							},$ionicPopup);
+						}
+						else
+						{
+							funciones.popAlert("ATENCIÓN",json.mensaje,function(){
+								$("#clave").val("");
+								$("#nclave").val("");
+								$("#rclave").val("");
+							},$ionicPopup);
+						}
+					},true,$ionicLoading,$ionicPopup)
 
+			},$ionicPopup);
 
+		}
+	}
 
-}])
+	
+	$scope.actualizaDataUsuario = function()
+	{
+		var tituloPop	=	"COMPLETE LA INFORMACIÓN";
+		//declaro las variables del registro
+		$scope.nombres 		=  $("#nombres").val();
+		$scope.correo 		=  $("#email").val();
+		$scope.celular 		=  $("#celular").val();
+		$scope.ciudad 		=  $("#ciudad").val();
+		
+		//inicio con la validación de 
+		if($scope.nombres == "" || $scope.nombres == undefined)
+		{
+			funciones.popAlert(tituloPop,"Debe escribir su nombre",function(){},$ionicPopup);
+		}
+		else if($scope.correo == undefined || $scope.correo == "")
+		{
+			funciones.popAlert(tituloPop,"Debe escribir un correo electrónico válido",function(){},$ionicPopup);
+		}
+		else if($scope.correo != "" && !funciones.validaMail($scope.correo))
+		{
+			funciones.popAlert(tituloPop,"El correo electrónico que ingreso no es válido, por favor verifique",function(){},$ionicPopup);
+		}
+		else if($scope.celular == undefined || $scope.celular == "")
+		{
+			funciones.popAlert(tituloPop,"Debe un número de celular de contacto",function(){},$ionicPopup);
+		}
+		else if($scope.celular != "" && isNaN($scope.celular))
+		{
+			funciones.popAlert(tituloPop,"El campo celular sólo puede contener números",function(){},$ionicPopup);
+		}
+		else if($scope.ciudad == undefined || $scope.ciudad == "")
+		{
+			funciones.popAlert(tituloPop,"Debe seleccionar la ciudad de residencia",function(){},$ionicPopup);
+		}
+		else
+		{
+			funciones.popConfirm("CONFIRMACIÓN","Está a punto de actualizar su información de contacto, tenga en cuenta que al cambiar datos como el correo electrónico alterará su inicio de sesión, desea continuar?",function(){
+
+				var parametros = $("#formDataPersona").serialize()+"&accion=14&usuario="+session;
+					funciones.consultaApi(funciones.urlAPi,parametros,function(json){
+						//realizo la validació
+						if(json.continuar == 1)
+						{
+							funciones.popAlert("ATENCIÓN",json.mensaje,function(){
+							},$ionicPopup);
+						}
+						else
+						{
+							funciones.popAlert("ATENCIÓN",json.mensaje,function(){
+								//$("#pregunta").val("");
+								//$state.go();
+							},$ionicPopup);
+						}
+					},true,$ionicLoading,$ionicPopup)
+
+			},$ionicPopup);
+		}
+	}
+
+})
    
 .controller('cONTACTENOSCtrl', function ($scope,$http, $q, $stateParams,$state,$ionicLoading,$ionicHistory,funciones,$ionicPopup,$ionicLoading,$location) 
 {

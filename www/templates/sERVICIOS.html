@@ -11,14 +11,26 @@
     pulling-text="Desliza para actualizar..."
     on-refresh="refreshServicios()">
   </ion-refresher>
-    <ul class="list">
+    <!--<ul class="list">
 
         <a  style="border:none;margin:0 0 3% 0" class="item item-avatar" ng-repeat="serv in listaServicios" ui-sref="detalleServicio({idServicio:serv.id})">
           <img src="{{serv.foto}}">
           <h2 style="font-weight:bold">{{serv.titulo}}</h2>
           <p>{{serv.resumen}}</p>
+          
         </a>
 
-    </ul>
+    </ul>-->
+
+  <ul class="list">
+      <div class="card" ng-repeat="serv in listaServicios" ui-sref="detalleServicio({idServicio:serv.id})">
+        <div class="item item-text-wrap item item-avatar">
+          <img src="{{serv.foto}}" width="100%">
+            <h2 style="font-weight:bold;text-transform: uppercase">{{serv.titulo}}</h2>
+            <p>{{serv.resumen}}</p>
+        </div>
+      </div>
+  </ul>
+  
   </ion-content>
 </ion-view>
